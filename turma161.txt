@@ -1,0 +1,5 @@
+Caio,8.0
+Beatriz,9.5
+Luis,5.8
+Bruno,3.5
+Marcelo,6.0

@@ -1,0 +1,5 @@
+Lohanne,7.0
+Pedro,5.0
+Jorge,2.0
+Alessandra,5.6
+Samuel,7.2
