@@ -4,7 +4,7 @@ import sqlite3
 
 import os
 
-#existe só pra rodar em qlqr maquina
+# existe só pra rodar em qlqr maquina
 BASE_DIR = os.path.dirname(__file__)
 
 CAMINHO_DB = os.path.join(BASE_DIR, "SQLite.db")
@@ -43,12 +43,29 @@ titulo = canvas.create_text(
     0, 80,
     text="ESCOLA DOHKO",
     font=("Arial Black", 40),
-    fill="#7ED321")
+    fill="#7ED321"
+)
 
-lbl_professor = canvas.create_text(0, 100, text="PROFESSOR", font=("Arial", 20), fill="black")
-lbl_matricula = canvas.create_text(0, 200, text="MATRICULA", font=("Arial", 20), fill="black")
-lbl_turma = canvas.create_text(0, 300, text="TURMA", font=("Arial", 20), fill="black")
+lbl_professor = canvas.create_text(
+    0, 100,
+    text="PROFESSOR/ALUNO",
+    font=("Arial", 20),
+    fill="black"
+)
 
+lbl_matricula = canvas.create_text(
+    0, 200,
+    text="MATRICULA",
+    font=("Arial", 20),
+    fill="black"
+)
+
+lbl_turma = canvas.create_text(
+    0, 300,
+    text="TURMA",
+    font=("Arial", 20),
+    fill="black"
+)
 
 # input das turmas e matricula
 def ValidarInputMatricula(P):
@@ -59,16 +76,44 @@ def ValidarInputTurma(P):
 
 vcmd_matricula = root.register(ValidarInputMatricula)
 vcmd_turma = root.register(ValidarInputTurma)
-entry1 = tk.Entry(root, font=("Arial", 18), bd=0, justify="center",
-                  validate="key", validatecommand=(vcmd_matricula, "%P"))
 
-entry2 = tk.Entry(root, font=("Arial", 18), bd=0, justify="center",
-                  validate="key", validatecommand=(vcmd_turma, "%P"))
+entry1 = tk.Entry(
+    root,
+    font=("Arial", 18),
+    bd=0,
+    justify="center",
+    validate="key",
+    validatecommand=(vcmd_matricula, "%P")
+)
 
-box1 = canvas.create_rectangle(0, 0, 0, 0, outline="#555555", width=3)
-box2 = canvas.create_rectangle(0, 0, 0, 0, outline="#555555", width=3)
+entry2 = tk.Entry(
+    root,
+    font=("Arial", 18),
+    bd=0,
+    justify="center",
+    validate="key",
+    validatecommand=(vcmd_turma, "%P")
+)
 
-resultado_label = tk.Label(root, text="", font=("Arial", 16), bg="#d9d9d9", justify="left")
+box1 = canvas.create_rectangle(
+    0, 0, 0, 0,
+    outline="#555555",
+    width=3
+)
+
+box2 = canvas.create_rectangle(
+    0, 0, 0, 0,
+    outline="#555555",
+    width=3
+)
+
+resultado_label = tk.Label(
+    root,
+    text="",
+    font=("Arial", 16),
+    bg="#d9d9d9",
+    justify="left"
+)
 
 def ListaTurma():
     matricula = entry1.get()
@@ -87,20 +132,35 @@ def ListaTurma():
         return
 
     texto = "ALUNOS:\n\n"
+
     for aluno in alunos:
         texto += f"{aluno['nome']} - Nota: {aluno['nota']}\n"
 
     resultado_label.config(text=texto)
-    #botao do tkinter
+
+# botão mostrar notas
 btn = tk.Button(
     root,
     text="IMPRIMIR NOTAS",
     font=("Arial", 20),
-    bg="#7ED321",
+    bg="#2183D3",
     fg="black",
     bd=3,
     relief="solid",
-    command=ListaTurma)
+    command=ListaTurma
+)
+
+# botão sair
+btn_sair = tk.Button(
+    root,
+    text="SAIR",
+    font=("Arial", 18),
+    bg="#D9534F",
+    fg="black",
+    bd=3,
+    relief="solid",
+    command=root.destroy
+)
 
 def resize(event):
     w = event.width
@@ -113,11 +173,36 @@ def resize(event):
     canvas.coords(box1, w/3, 180, w/1.5, 230)
     canvas.coords(box2, w/3, 280, w/1.5, 330)
 
-    entry1.place(x=w/3+10, y=185, width=(w/1.5 - w/3 - 20), height=40)
-    entry2.place(x=w/3+10, y=285, width=(w/1.5 - w/3 - 20), height=40)
+    entry1.place(
+        x=w/3+10,
+        y=185,
+        width=(w/1.5 - w/3 - 20),
+        height=40
+    )
 
-    btn.place(x=w/2-125, y=400, width=250, height=70)
+    entry2.place(
+        x=w/3+10,
+        y=285,
+        width=(w/1.5 - w/3 - 20),
+        height=40
+    )
 
-    resultado_label.place(x=w/3, y=500)
+    btn.place(
+        x=w/2-125,
+        y=400,
+        width=250,
+        height=70
+    )
+
+    btn_sair.place(
+        x=w/2-75,
+        y=490,
+        width=150,
+        height=50
+    )
+
+    resultado_label.place(x=w/3, y=560)
+
 canvas.bind("<Configure>", resize)
+
 root.mainloop()
